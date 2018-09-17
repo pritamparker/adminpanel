@@ -1,0 +1,41 @@
+.assign{
+    background: lightgray;
+    margin-top: 8px;
+}
+.card-body{
+    padding:1rem
+}
+.cross{
+    position: absolute;
+    right: 380px;
+    top: 20px;
+}
+.billImage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    overflow: hidden;
+}
+.imageNumber{
+    position: absolute;
+    right: 20px;
+    top:20px;
+    z-index: 999;
+    background-color:white;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+.hoverModel{
+    position: fixed;
+     background: ghostwhite;
+     border: 1px solid black;
+     z-index: 99999999999; 
+     left: 5px;
+     top:5px;
+     width: 700px;
+     min-height: auto;
+}
+.fontSmall{
+    font-size: 11px !important;
+}

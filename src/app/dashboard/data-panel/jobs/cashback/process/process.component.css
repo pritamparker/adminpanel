@@ -1,0 +1,16 @@
+.billImage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    overflow: hidden;
+}
+.imageNumber{
+    position: absolute;
+    right: 30px;
+    top:55px;
+    z-index: 999;
+    background-color:white;
+    padding-left: 3px;
+    padding-right: 3px;
+}

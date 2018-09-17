@@ -1,0 +1,8 @@
+<div class="container-scroller">
+  <app-header></app-header>
+  <div class="container-fluid page-body-wrapper">
+    <app-left-panel *ngIf="message" class="sidebar sidebar-offcanvas"></app-left-panel>
+    <app-data-panel class="main-panel" [ngStyle]="{'width':message === false ? 'calc(100% - 0px)' : 'calc(100% - 255px)' }"></app-data-panel>
+  </div>
+
+</div>

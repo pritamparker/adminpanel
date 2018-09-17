@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-lg-7 grid-margin stretch-card">
+    <div class="card card-weather">
+      <div align="center">
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button *ngIf="imageArrayLength>-1" type="button" class="btn btn-block  btn-success" (click)="prevImage()">
+            <i class="mdi mdi-arrow-left-bold">Prev</i>
+          </button>
+          <button type="button" class="btn btn-success" (click)="newWindow()">
+            <i class="mdi mdi-window-restore">New Window</i>
+          </button>
+          <a href="{{images[imageIndex]}}" target="_blank" download style="text-decoration: none;">
+            <button type="button" class="btn btn-success">
+              <i class="mdi mdi-download"> Download</i>
+            </button>
+          </a>
+          <button type="button" class="btn btn-success" (click)="rotate()">
+            <i class="mdi mdi-rotate-right">Rotate</i>
+          </button>
+          <button *ngIf="imageArrayLength>-1" type="button" class="btn btn-success" (click)="nextImage()">
+            <i class="mdi mdi-arrow-right-bold"> Next</i>
+          </button>
+        </div>
+      </div>
+      <div class="card-body" style="padding: 1rem">
+        <span class="imageNumber">Image {{imageIndex+1}} of {{imageArrayLength}}</span>
+        <div class="weather-date-location">
+          <div align="center" class="billImage">
+            <img class="zoom img-responsive" [src]="images[imageIndex]" [style.transform]="'rotate(' + imagerotation + 'deg)'" style="max-width:700px;"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-5 grid-margin stretch-card">
+    <app-seller-verify (messageEvent)="receiveMessage($event)" [jobDetails]="jobDetails" *ngIf="!jobDetails?.products[0].document_number && !message"></app-seller-verify>
+    <app-skew *ngIf="jobDetails?.products[0].document_number || message " [jobDetails]="jobDetails "></app-skew>
+  </div>
+</div>

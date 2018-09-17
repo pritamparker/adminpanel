@@ -1,0 +1,12 @@
+#pointer{
+    cursor:  pointer !important;
+}
+.admin{
+   background:  linear-gradient(120deg, #00e4d0, #5983e8)
+}
+.superadmin{
+    background:  linear-gradient(120deg, #00e4d0, #5983e8)
+ }
+.ce{
+    background:  linear-gradient(120deg, #00e4d0, #118307)
+}

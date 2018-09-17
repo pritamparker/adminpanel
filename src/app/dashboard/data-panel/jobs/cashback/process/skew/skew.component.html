@@ -1,0 +1,40 @@
+<div>
+  <form #cashbackForm="ngForm" (ngSubmit)="cashback(cashbackForm)">
+    <div class="table-responsive card">
+      <table class="table table-bordered">
+        <thead>
+          <tr class="d-flex">
+            <th class="col-1">#</th>
+            <th class="col-3" scope="row">Title</th>
+            <th class="col-2">Measure</th>
+            <th class="col-2">Quantity</th>
+            <th class="col-2">Tentative<br/> Price
+            </th>
+            <th class="col-2">Selling<br/>Price
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let sku of skuData;let i=index">
+          <tr class="d-flex">
+            <td class="col-1"> <code> {{i+1}}</code></td>
+            <td class="col-3" scope="row">
+              <span class="xtra-small">{{sku?.name}}</span>
+            </td>
+            <td class="col-2">{{sku?.measurement_value}} {{sku?.measurement_type}}
+              <span *ngIf="sku?.pack_numbers > 1">X {{sku?.pack_numbers}}</span>
+            </td>
+            <td class="col-2">{{sku?.quantity}}</td>
+            <td class="col-2">{{sku?.mrp * sku?.quantity}}</td>
+            <td class="col-2">
+              <input type="number" class="form-control" name="{{sku?.id}}" ngModel="0">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <div style="float: right">
+      <button class="btn btn-success" type="submit">Verify Cashback</button>
+    </div>
+  </form>
+</div>

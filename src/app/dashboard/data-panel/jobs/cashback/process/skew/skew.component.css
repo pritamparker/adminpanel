@@ -1,0 +1,17 @@
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  /* appearance: none; */
+  margin: 0;
+}
+td {
+  white-space: normal !important; 
+  word-wrap: break-word;  
+}
+table {
+  table-layout: fixed;
+}
+.xtra-small{
+  font-size: 12px !important;
+}

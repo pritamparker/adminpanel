@@ -1,0 +1,206 @@
+<div class="row">
+  <div class="col-md-4 offset-8"><button class="btn btn-block btn-sm btn-info" (click)="openModal('reassignView')">Reassign</button>
+  </div>
+</div>
+<p></p>
+<div class="card" style="padding:10px">
+  <div class="col-sm-12" *ngIf="jobDetails?.products[0]?.seller_id==null && !showSellerForm">
+    <form #verifySellerForm="ngForm" (ngSubmit)="verifySeller(verifySellerForm)">
+      <p></p>
+      <div class="form-group row">
+        <div class="col-sm-4 col-form-label">
+          <label> Seller Type</label>
+        </div>
+        <div class="col-sm-8">
+          <select class="form-control" (click)="selectSellerType($event.target.value)">
+            <option value="">Select Seller Type</option>
+            <option value="online">Online Seller</option>
+            <option value="offline">Offline Seller</option>
+          </select>
+        </div>
+        <div class="col-sm-4 col-form-label">
+          <label> Seller</label>
+        </div>
+        <div class="col-sm-8">
+          <select class="form-control" name="seller_id" (click)="selectSeller($event.target.value)" ngModel>
+            <option value="">Select Seller</option>
+            <option *ngFor="let seller of sellers" [value]="seller.id">{{seller?.seller_name}}</option>
+          </select>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Bill Date</label>
+            <div class="col-sm-8" style="margin-top: 10px">
+              <label>{{jobDetails?.products[0]?.document_date | date}}</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Bill Time</label>
+            <div class="col-sm-8">
+              <input name="time" type="time" step="1" ngModel>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label"><span class="text-danger">*</span> Document No</label>
+            <div class="col-sm-8">
+              <input name="document_number" type="text" class="form-control" ngModel="{{jobDetails?.products[0]?.document_number}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label">Gstin</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" name="gstin" ngModel="{{gstin}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-8 offset-4">
+              <button class="btn btn-md btn-success btn-block" type="submit">Verify</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="!jobDetails?.products[0]?.document_number">
+    <div class="col-md-12" *ngIf="jobDetails?.products[0]?.seller_id && !showSellerForm">
+      <ul class="list-arrow">
+        <li>
+          <span class="text-info">Name : </span>{{jobDetails?.seller[0]?.seller_name}}
+        </li>
+        <li>
+          <span class="text-info">Address : </span>{{jobDetails?.seller[0]?.address}}
+        </li>
+        <li>
+          <span class="text-info">Gstin : </span>{{jobDetails?.seller[0]?.gstin || blank}}
+        </li>
+        <li>
+          <span class="text-info">Document Date : </span>{{jobDetails?.products[0]?.document_date | date}}
+        </li>
+        <!-- <li>
+          <span class="text-info">Document Number : </span>{{jobDetails?.products[0]?.document_number || blank}}
+        </li> -->
+      </ul>
+      <form #verifySellerForm="ngForm" (ngSubmit)="verifySeller(verifySellerForm)">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Bill Time</label>
+          <div class="col-sm-8" style="display: -webkit-box">
+            <input name="time" type="time" step="1" ngModel>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Document No</label>
+          <div class="col-sm-6">
+            <input name="document_number" type="text" class="form-control" ngModel>
+          </div>
+        </div>
+        <div style="float: right;">
+          <button class="btn btn-xs btn-success" type="submit">Verify Seller</button>&nbsp;&nbsp;
+          <button class="btn btn-xs btn-danger" type="button" (click)="sellerMismatch()">Seller Mismatch</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-sm-12" *ngIf="showSellerForm">
+    <button class="btn btn-info btn-xs" (click)="backToVerifySeller()">Back</button>
+    <form #updateSellerForm="ngForm" (ngSubmit)="updateSeller(updateSellerForm)">
+      <div class="form-group row">
+        <div class="col-sm-4 col-form-label">
+          <label>Name</label>
+        </div>
+        <div class="col-sm-8">
+          <input name="seller_name" type="text" class="form-control" [ngModel]="sellerData?.seller_name">
+        </div>
+        <div class="col-sm-4 col-form-label">
+          <label>Contact No</label>
+        </div>
+        <div class="col-sm-8">
+          <input name="contact_no" type="text" class="form-control" [ngModel]="sellerData?.contact_no">
+        </div>
+        <div class="col-sm-4 col-form-label">
+          <label>Email</label>
+        </div>
+        <div class="col-sm-8">
+          <input name="email" type="text" class="form-control" [ngModel]="sellerData?.email">
+        </div>
+        <div class="col-sm-4 col-form-label">
+          <label>Address</label>
+        </div>
+        <div class="col-sm-8">
+          <input name="address" type="text" class="form-control" [ngModel]="sellerData?.address">
+        </div>
+        <div class="col-sm-4 col-form-label">
+          <label>State</label>
+        </div>
+        <div class="col-sm-8">
+          <select class="form-control" name="state_id" [ngModel]="sellerData?.state_id">
+            <option value="">Select State</option>
+            <option *ngFor="let state of states" [value]="state?.id">{{state?.state_name}}</option>
+          </select>
+        </div>
+        <!-- <div class="col-sm-4 col-form-label">
+          <label>City</label>
+        </div>
+        <div class="col-sm-8">
+          <select class="form-control" name="city_id" [ngModel]="sellerData?.city_id">
+            <option value="">Select City</option>
+            <option *ngFor="let city of cities" [value]="city?.id">{{city?.name}}</option>
+          </select>
+        </div> -->
+        <div class="col-sm-4 col-form-label">
+          <label>Latitude</label>
+        </div>
+        <div class="col-sm-8">
+          <input name="latitude" type="text" class="form-control" [ngModel]="sellerData?.latitude">
+        </div>
+        <div class="col-sm-4 col-form-label">
+          <label>Longitude</label>
+        </div>
+        <div class="col-sm-8">
+          <input name="longitude" type="text" class="form-control" [ngModel]="sellerData?.longitude">
+        </div>
+        <div class="col-sm-4 col-form-label">
+          <label>Gstin</label>
+        </div>
+        <div class="col-sm-8">
+          <input name="gstin" type="text" class="form-control" [ngModel]="sellerData?.gstin">
+        </div>
+        <div class="col-sm-4 col-form-label">
+          <label>PAN</label>
+        </div>
+        <div class="col-sm-8">
+          <input name="pan_no" type="text" class="form-control" [ngModel]="sellerData?.pan_no">
+        </div>
+        <div class="col-sm-4 col-form-label">
+          <label> Seller Type</label>
+        </div>
+        <div class="col-sm-8">
+          <select class="form-control" name="seller_id" [ngModel]="sellerData?.seller_type_id">
+            <option value="">Select Seller</option>
+            <option *ngFor="let seller of sellerType" [value]="seller.id">{{seller?.title}}</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <button class="btn btn-md btn-success" type="submit">Update</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<jw-modal id="reassignView">
+  <button class="btn btn-icons btn-rounded btn-secondary cross" (click)="closeModal('reassignView');">X</button>
+  <form #assignAdminForm="ngForm" (ngSubmit)="assignAdmin(assignAdminForm)">
+    <div class="card-body">
+      <div class="form-group row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <textarea placeholder="Comments" name="comments" class="form-control" id="exampleTextarea1" rows="2" ngModel></textarea>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <button class="btn btn-block btn-xs btn-success" type="submit">Assign</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</jw-modal>

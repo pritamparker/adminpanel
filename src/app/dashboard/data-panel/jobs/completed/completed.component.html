@@ -1,0 +1,124 @@
+<div class="row">
+  <div class="col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Completed Jobs</h4>
+        <div *ngIf="userType != ce" class="row" style="margin-bottom: 7px">
+
+          <div class="col-md-10">
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Cashback ID</th>
+                <th>JOB Date</th>
+                <th>Comments</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let bill of bills?.data; let i = index">
+              <tr>
+                <td>
+                  {{i+1}}
+                </td>
+                <td>
+                  {{ bill?.id}}
+                </td>
+                <td>
+                  {{ bill?.updated_at | date}}
+                </td>
+                <td class="comment">{{ bill?.comments}}</td>
+                <td>
+                  <button (mouseover)="showBill(bill)" type="button" class="btn btn-xs btn-outline-primary">View</button>&nbsp;&nbsp;
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <jw-modal id="multipleAssignView">
+    <button class="btn btn-icons btn-rounded btn-secondary cross" (click)="closeModal('multipleAssignView');">X</button>
+    <form #multiAssignCEForm="ngForm" (ngSubmit)="multiAssignCE(multiAssignCEForm)">
+      <div class="card-body">
+        <div class="form-group row">
+          <div class="col-sm-12" style="margin-bottom: 10px">
+            <label for="">Selct CE for Assign</label>
+            <select class="form-control form-control-sm" name="ce_id" ngModel>
+              <option *ngFor="let ce of users" [value]="ce.id">{{ce.email}}</option>
+            </select>
+          </div>
+          <br/>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <textarea placeholder="Comments" name="comments" class="form-control" id="exampleTextarea1" rows="2" ngModel></textarea>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <button class="btn btn-block btn-xs btn-success" type="submit">Assign</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </jw-modal>
+  <div *ngIf="showBillPopup" class="card hoverModel" (clickOutside)="close($event)">
+    <div class="card-body" style="padding: 1rem;top: 0">
+      <span class="imageNumber">Image {{imageIndex+1}} of {{imageArrayLength}}</span>
+      <div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button *ngIf="imageArrayLength>-1" type="button" class="btn btn-block  btn-success" (click)="prevImage()">
+            <i class="mdi mdi-arrow-left-bold">Prev</i>
+          </button>
+          <a href="{{images[imageIndex]}}" target="_blank" download style="text-decoration: none;">
+            <button type="button" class="btn btn-success">
+              <i class="mdi mdi-download"> Download</i>
+            </button>
+          </a>
+          <button type="button" class="btn btn-success" (click)="rotate()">
+            <i class="mdi mdi-rotate-right">Rotate</i>
+          </button>
+          <button *ngIf="imageArrayLength>-1" type="button" class="btn btn-success" (click)="nextImage()">
+            <i class="mdi mdi-arrow-right-bold"> Next</i>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div align="center" class="billImage">
+            <img class="zoom img-responsive" [src]="images[imageIndex]" [style.transform]="'rotate(' + imagerotation + 'deg)'" style="max-width:720px;max-height: 720px"
+            />
+          </div>
+        </div>
+        <div class="col-md-4">
+          <ul class="list-ticked">
+            <code>Document Date</code>
+            <li>{{documentDate | date}}</li>
+            <code>Amount</code>
+            <li>&#8377; {{amount}}</li>
+          </ul>
+          <code>Accept Only If :</code>
+          <ul class="list-arrow fontSmall">
+            <li>Bill is Printed
+            </li>
+            <li>Bill is in English
+            </li>
+            <li>Eligible Receipts for Purchase Only in India</li>
+            <li>Bill Must be Paid tax invoice </li>
+            <li>User should be end consumer & Not Reseller</li>
+            <li>Bill is FMCG Category</li>
+            <li>Image is clear/readable & Not torn</li>
+            <li>Date of Purchase, Total Amount, Seller info, Bill Number is appearing correctly</li>
+            <li>Items in the bill must be clearly distinguished for Brand & Product. Looking at the bill one should be able
+              to determine what item and of which brand has been bought</li>
+            <li>Match DOP</li>
+            <li>Match Total Amount</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
